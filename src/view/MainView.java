@@ -51,6 +51,7 @@ public class MainView {
         System.out.println("1. Sparkonto");
         System.out.println("2. Lönekonto");
         System.out.println("3. Kreditkonto");
+        System.out.println("4. Pensionsskonto");
         System.out.println("-1. Avsluta");
 
         choice = Utilities.getInteger(-1,3);
@@ -62,6 +63,11 @@ public class MainView {
         Utilities.padChars('*', 40);
         System.out.println("Kundinformation \n");
         Utilities.printArray(customerInfo);
+    }
+
+    public String getInformation(String message){
+        showMessage(message);
+        return Utilities.getString();
     }
 
     public void showMessage(String message){

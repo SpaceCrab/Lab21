@@ -47,6 +47,24 @@ public class Customer extends Person{
         return accountStrings;
     }
 
+    public void addAccount(Account account){
+        if(accounts == null)
+        {
+            accounts = new Account[1];
+            accounts[0] = account;
+        }
+        else
+        {
+            Account[] temp = new Account[accounts.length + 1];
+            for(int i = 0; i < accounts.length; i++)
+            {
+                temp[i] = accounts[i];
+            }
+            temp[accounts.length] = account;
+            accounts = temp;
+        }
+    }
+
     public String[] getInfoStrings()
     {
         String[] infoStrings = new String[5];

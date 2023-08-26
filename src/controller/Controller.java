@@ -1,7 +1,6 @@
 package controller;
 
-import model.CustomerManager;
-import model.Customer;
+import model.*;
 import view.MainView;
 
 public class Controller {
@@ -80,10 +79,16 @@ public class Controller {
 
             switch (choice){
                 case 1:
+                    createSavingsAccount();
                     break;
                 case 2:
+                    createSalaryAccount();
                     break;
                 case 3:
+                    createCreditAccount();
+                    break;
+                case 4:
+                    createPensionAccount();
                     break;
                 case -1:
                     break;
@@ -94,6 +99,54 @@ public class Controller {
         }while (choice != -1);
     }
 
+    public void createCreditAccount(){
+        String accountId = ""+(int)(Math.random() * 100) ;
+        String accountName = mainView.getInformation("Ange kontonamn");
+        String accountType = "Credit";
+        double interestRate = 0.05;
+        double creditLimit = 10000;
+        double accountBalance = 0;
+
+        Account creditAccount = new CreditCardAccount(accountId, accountName, accountBalance, accountType, creditLimit, interestRate);
+        currentCustomer.addAccount(creditAccount);
+    }
+
+    public void createSavingsAccount(){
+        String accountId = ""+(int)(Math.random() * 100) ;
+        String accountName = mainView.getInformation("Ange kontonamn");
+        String accountType = "Credit";
+        double interestRate = 0.05;
+        double accountBalance = 0;
+        double minimumBalance = 0;
+        double maximumWithdrawals = 50;
+
+        Account savingsAccount = new SavingsAccount(accountId, accountBalance, accountType, accountName, interestRate, minimumBalance, maximumWithdrawals);
+        currentCustomer.addAccount(savingsAccount);
+    }
+
+    public void createSalaryAccount(){
+        String accountId = ""+(int)(Math.random() * 100) ;
+        String accountName = mainView.getInformation("Ange kontonamn");
+        String accountType = "Salary";
+        String employer = mainView.getInformation("Ange arbetsgivare");
+        double accountBalance = 0;
+
+        Account salaryAccount = new SalaryAccount(accountId, accountBalance, accountType, accountName, employer);
+        currentCustomer.addAccount(salaryAccount);
+    }
+
+    public void createPensionAccount(){
+        String accountId = ""+(int)(Math.random() * 100) ;
+        String accountName = mainView.getInformation("Ange kontonamn");
+        String accountType = "Pension";
+        double interestRate = 0.05;
+        double accountBalance = 0;
+        int pensionAge = 65;
+        int pensionWithdrawalAge = 70;
+
+        Account pensionAccount = new PensionAccount(accountId, accountBalance, accountType, accountName, interestRate, pensionAge, pensionWithdrawalAge);
+        currentCustomer.addAccount(pensionAccount);
+    }
     public String[] getCustomerInfo(Customer customer){
         return customer.getInfoStrings();
     }
