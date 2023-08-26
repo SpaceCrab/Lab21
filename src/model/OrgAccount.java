@@ -1,10 +1,9 @@
 package model;
 
-public class OrgAccount extends Account{
-
+public class OrgAccount extends Account {
     private String orgId;
-    public OrgAccount(String accountId, double accountBalance, String accountType, String accountName, String orgId) {
-        super(accountId, accountBalance, accountType, accountName);
+    public OrgAccount(String accountId, double accountBalance, String accountName, AccountType accountType, String orgId) {
+        super(accountId, accountBalance, accountName, accountType);
         this.orgId = orgId;
     }
 
@@ -14,35 +13,5 @@ public class OrgAccount extends Account{
 
     public void setOrgId(String orgId) {
         this.orgId = orgId;
-    }
-
-    @Override
-    public void setAccountId() {
-
-    }
-
-    @Override
-    public String getAccountName() {
-        return null;
-    }
-
-    @Override
-    public void setAccountName() {
-
-    }
-
-    @Override
-    public void setAccountType() {
-
-    }
-
-    @Override
-    public double setBalance() {
-        return 0;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " " + orgId;
     }
 }

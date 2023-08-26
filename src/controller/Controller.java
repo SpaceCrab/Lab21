@@ -5,16 +5,28 @@ import view.MainView;
 
 public class Controller {
     private CustomerManager customerManager;
+    private AccountManager accountManager;
+
     private MainView mainView;
-    private Customer currentCustomer;
 
+    public Controller()
+    {
+        final int MAX_CUSTOMERS = 10;
+        final int MAX_ACCOUNTS = 10;
+        customerManager = new CustomerManager(MAX_CUSTOMERS);
+        accountManager = new AccountManager(MAX_ACCOUNTS);
 
-    public Controller() {
-        final int MAX_CUSTOMERS = 100;
-        customerManager = new CustomerManager();
+        // Create some test data
+        customerManager.addCustomer(new Customer(customerManager.getNextID(), "Emily", "Wong", "555555-5555", new Address("789 Maple St", "Bigtown", "13579")));
+        Account account = new SavingsAccount(accountManager.getNextID(), 0.0, "Sparkonto", AccountType.Savings, 0.05, 0.0, 50);
+        account.addAccountHolder(customerManager.getCurrentID());
+        accountManager.addAccount(account);
+
+        customerManager.addCustomer(new Customer(customerManager.getNextID(), "John", "Doe", "111111-1111", new Address("123 Main St", "Anytown", "12345")));
+        customerManager.addCustomer(new Customer(customerManager.getNextID(), "Sarah", "Smith", "333333-3333", new Address("789 Elm St", "Another Town", "54321")));
+        customerManager.addCustomer(new Customer(customerManager.getNextID(), "David", "Lee", "444444-4444", new Address("456 Pine St", "Smalltown", "98765")));
+
         mainView = new MainView(this);
-        currentCustomer = null;
-
         showLogin();
     }
 
@@ -25,15 +37,10 @@ public class Controller {
         do {
             String[] persons = customerManager.getCustomerList();
             choice = mainView.showLoginMenu(persons);
-
-            if (choice >= 0 && choice < persons.length)
-            {
-                currentCustomer = customerManager.getCustomer(choice);
-                mainView.showMessage("Välkommen " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
-                showMainMenu();
-            }
+            boolean ok = customerManager.setLoginAsCustomerIndex(choice);
+            if (ok) showMainMenu();
+            else mainView.showMessage("Felaktigt val");
         }while (choice != -1);
-
     }
 
     /*
@@ -47,21 +54,21 @@ public class Controller {
 
             switch (choice){
                 case 1:
-                    String[] customerInfo = getCustomerInfo(currentCustomer);
-                    mainView.displayCustomerInfo(customerInfo);
+                    mainView.displayCustomerInfo(customerManager.getLoginAsCustomer().getInfoStrings());
                     break;
                 case 2:
-                    String[] accountInfo = getAccountInfo(currentCustomer);
+                    String[] accountInfo = accountManager.getCustomerAccount(customerManager.getLoginAsCustomer().getCustomerId());
                     mainView.displayCustomerInfo(accountInfo);
                     break;
                 case 3:
                     showAccountCreationMenu();
                     break;
                 case 4:
-                    showAccountDeletionMenu();
+                    // showAccountDeletionMenu();
                     break;
                 case -1:
                     mainView.showMessage("Välkommen åter!");
+                    customerManager.logout();
                     break;
                 default:
                     break;
@@ -91,6 +98,9 @@ public class Controller {
                 case 4:
                     createPensionAccount();
                     break;
+                case 5:
+                    createOrgAccount();
+                    break;
                 case -1:
                     break;
                 default:
@@ -101,99 +111,114 @@ public class Controller {
     }
 
     private void showAccountDeletionMenu(){
-        int choice = 0;
-        do{
-            String[] accountInfo = getAccountInfo(currentCustomer);
-            choice = mainView.showAccountDeletionMenu(accountInfo);
-            if(choice >= 0 && choice < accountInfo.length){
-                currentCustomer.removeAccount(currentCustomer.getAccount(choice));
-            }
-        }while(choice != -1);
-    }
-
-    public void createCreditAccount(){
-        String accountId = ""+(int)(Math.random() * 100) ;
-        String accountName = mainView.getInformation("Ange kontonamn");
-        String accountType = "Credit";
-        double interestRate = 0.05;
-        double creditLimit = 10000;
-        double accountBalance = 0;
-
-        Account creditAccount = new CreditCardAccount(accountId, accountName, accountBalance, accountType, creditLimit, interestRate);
-        currentCustomer.addAccount(creditAccount);
+        // int choice = 0;
+        // do{
+        //     String[] accountInfo = getAccountInfo(currentCustomer);
+        //     choice = mainView.showAccountDeletionMenu(accountInfo);
+        //     if(choice >= 0 && choice < accountInfo.length){
+        //         currentCustomer.removeAccount(currentCustomer.getAccount(choice));
+        //     }
+        // }while(choice != -1);
     }
 
     public void createSavingsAccount(){
-        String accountId = ""+(int)(Math.random() * 100) ;
+        String accountId = accountManager.getNextID();
         String accountName = mainView.getInformation("Ange kontonamn");
-        String accountType = "Savings";
+        AccountType accountType = AccountType.Savings;
         double interestRate = 0.05;
         double accountBalance = 0;
         double minimumBalance = 0;
         double maximumWithdrawals = 50;
 
-        Account savingsAccount = new SavingsAccount(accountId, accountBalance, accountType, accountName, interestRate, minimumBalance, maximumWithdrawals);
-        currentCustomer.addAccount(savingsAccount);
+        Account savingsAccount = new SavingsAccount(accountId, accountBalance, accountName, accountType, interestRate, minimumBalance, maximumWithdrawals);
+        savingsAccount.addAccountHolder(customerManager.getLoginAsCustomer().getCustomerId());
+        accountManager.addAccount(savingsAccount);
+    }
+
+    public void createCreditAccount(){
+        String accountId = accountManager.getNextID();
+        String accountName = mainView.getInformation("Ange kontonamn");
+        AccountType accountType = AccountType.CreditCard;
+        double creditLimit = 10000;
+        double interestRate = 0.05;
+        double accountBalance = 0;
+
+        Account creditAccount = new CreditCardAccount(accountId, accountBalance, accountName, accountType, creditLimit, interestRate);
+        creditAccount.addAccountHolder(customerManager.getLoginAsCustomer().getCustomerId());
+        accountManager.addAccount(creditAccount);
     }
 
     public void createSalaryAccount(){
-        String accountId = ""+(int)(Math.random() * 100) ;
+        String accountId = accountManager.getNextID();
         String accountName = mainView.getInformation("Ange kontonamn");
-        String accountType = "Salary";
+        AccountType accountType = AccountType.Salary;
         String employer = mainView.getInformation("Ange arbetsgivare");
         double accountBalance = 0;
 
-        Account salaryAccount = new SalaryAccount(accountId, accountBalance, accountType, accountName, employer);
-        currentCustomer.addAccount(salaryAccount);
+        Account salaryAccount = new SalaryAccount(accountId, accountBalance, accountName, accountType, employer);
+        salaryAccount.addAccountHolder(customerManager.getLoginAsCustomer().getCustomerId());
+        accountManager.addAccount(salaryAccount);
     }
 
     public void createPensionAccount(){
         String accountId = ""+(int)(Math.random() * 100) ;
         String accountName = mainView.getInformation("Ange kontonamn");
-        String accountType = "Pension";
-        double interestRate = 0.05;
+        AccountType accountType = AccountType.Pension;
         double accountBalance = 0;
         int pensionAge = 65;
         int pensionWithdrawalAge = 70;
 
-        Account pensionAccount = new PensionAccount(accountId, accountBalance, accountType, accountName, interestRate, pensionAge, pensionWithdrawalAge);
-        currentCustomer.addAccount(pensionAccount);
-    }
-    public String[] getCustomerInfo(Customer customer){
-        return customer.getInfoStrings();
+        Account pensionAccount = new PensionAccount(accountId, accountBalance, accountName, accountType, pensionAge, pensionWithdrawalAge);
+        pensionAccount.addAccountHolder(customerManager.getLoginAsCustomer().getCustomerId());
+        accountManager.addAccount(pensionAccount);
     }
 
-    public String[] getAccountInfo(Customer customer){
-        return customer.getAccountStrings();
-    }
-    public void setCustomerPersonNr(String personNr){
-        if(currentCustomer == null)
-            currentCustomer = new Customer();
+    public void createOrgAccount(){
+        String accountId = accountManager.getNextID();
+        String accountName = mainView.getInformation("Ange kontonamn");
+        AccountType accountType = AccountType.Organization;
+        String orgId = mainView.getInformation("Ange orgId");
+        double accountBalance = 0;
 
-        currentCustomer.setPersonalNr(personNr);
-
-    }
-
-    public void setCustomerFirstName(String firstName){
-        if(currentCustomer == null)
-            currentCustomer = new Customer();
-
-        currentCustomer.setFirstName(firstName);
+        Account orgAccount = new OrgAccount(accountId, accountBalance, accountName, accountType, orgId);
+        orgAccount.addAccountHolder(customerManager.getLoginAsCustomer().getCustomerId());
+        accountManager.addAccount(orgAccount);
     }
 
-    public void setCustomerLastName(String lastName){
-        if(currentCustomer == null)
-            currentCustomer = new Customer();
+    // public String[] getCustomerInfo(Customer customer){
+    //     return customer.getInfoStrings();
+    // }
 
-        currentCustomer.setLastName(lastName);
-    }
+    // public String[] getAccountInfo(Customer customer){
+    //     return customer.getAccountStrings();
+    // }
+    // public void setCustomerPersonNr(String personNr){
+    //     if(currentCustomer == null)
+    //         currentCustomer = new Customer();
+
+    //     currentCustomer.setPersonalNr(personNr);
+
+    // }
+
+    // public void setCustomerFirstName(String firstName){
+    //     if(currentCustomer == null)
+    //         currentCustomer = new Customer();
+
+    //     currentCustomer.setFirstName(firstName);
+    // }
+
+    // public void setCustomerLastName(String lastName){
+    //     if(currentCustomer == null)
+    //         currentCustomer = new Customer();
+
+    //     currentCustomer.setLastName(lastName);
+    // }
 
     public void addNewCustomer(){
-        boolean ok = customerManager.addNew(currentCustomer);
-
-        if (ok)
-            mainView.showMessage("ny kund registrerad!");
-        else
-            mainView.showMessage("kunde inte registrera");
+        // boolean ok = customerManager.addCustomer(currentCustomer);
+        // if (ok)
+        //     mainView.showMessage("ny kund registrerad!");
+        // else
+        //     mainView.showMessage("kunde inte registrera");
     }
 }

@@ -1,40 +1,27 @@
 package model;
 
-public class CreditCardAccount extends Account{
+public class CreditCardAccount extends Account {
 
     private double creditLimit;
-
     private double interestRate;
 
-    public CreditCardAccount(String accountId, String accountName, double accountBalance, String accountType, double creditLimit, double interestRate) {
+    public CreditCardAccount(String accountId, double accountBalance, String accountName, AccountType accountType, double creditLimit, double interestRate) {
         super(accountId, accountBalance, accountName, accountType);
         this.creditLimit = creditLimit;
         this.interestRate = interestRate;
     }
 
-    @Override
-    public void setAccountId() {
-
+    public double getCreditLimit() {
+        return creditLimit;
     }
-
-    @Override
-    public String getAccountName() {
-        return null;
+    public void setCreditLimit(double creditLimit) {
+        this.creditLimit = creditLimit;
     }
-
-    @Override
-    public void setAccountName() {
-
+    public double getInterestRate() {
+        return interestRate;
     }
-
-    @Override
-    public void setAccountType() {
-
-    }
-
-    @Override
-    public double setBalance() {
-        return 0;
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
     }
 
     @Override

@@ -2,18 +2,25 @@ package model;
 
 public class SavingsAccount extends Account{
 
-    private double interestRate;
-
     private double minimumBalance;
-
     private double maximumWithdrawals;
-
     private double currentWithdrawals;
-    public SavingsAccount(String accountId, double accountBalance, String accountType, String accountName, double interestRate, double minimumBalance, double maximumWithdrawals) {
-        super(accountId, accountBalance, accountType, accountName);
+    protected double interestRate;
+
+    public SavingsAccount(
+        String accountId,
+        double accountBalance,
+        String accountName,
+        AccountType accountType,
+        double interestRate,
+        double minimumBalance,
+        double maximumWithdrawals
+    ) {
+        super(accountId, accountBalance, accountName, accountType);
         this.interestRate = interestRate;
         this.minimumBalance = minimumBalance;
         this.maximumWithdrawals = maximumWithdrawals;
+        this.currentWithdrawals = 0.0;
     }
 
     public double getInterestRate() {
@@ -47,29 +54,10 @@ public class SavingsAccount extends Account{
     public void increaseCurrentWithdrawals() {
         this.currentWithdrawals++;
     }
-    @Override
-    public void setAccountId() {
 
-    }
-
-    @Override
-    public String getAccountName() {
-        return null;
-    }
-
-    @Override
-    public void setAccountName() {
-
-    }
-
-    @Override
-    public void setAccountType() {
-
-    }
-
-    @Override
-    public double setBalance() {
-        return 0;
+    public double calculateSavingsAmount(int years) {
+        double savingsAmount = getBalance() * Math.pow(1 + interestRate, years);
+        return savingsAmount;
     }
 
     @Override

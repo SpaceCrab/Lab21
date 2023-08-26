@@ -52,9 +52,10 @@ public class MainView {
         System.out.println("2. Lönekonto");
         System.out.println("3. Kreditkonto");
         System.out.println("4. Pensionsskonto");
+        System.out.println("5. Organisationskonto");
         System.out.println("-1. Avsluta");
 
-        choice = Utilities.getInteger(-1,4);
+        choice = Utilities.getInteger(-1,5);
 
         return choice;
     }

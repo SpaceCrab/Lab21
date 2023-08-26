@@ -9,15 +9,15 @@ public class CustomerView {
     }
 
     public void readCustomerInfo(){
-        System.out.println("OK - Lägg till ny person! ");
+        // System.out.println("OK - Lägg till ny person! ");
 
-        System.out.println("Ange personnummret: ");
-        String text = Utilities.getString();
-        controller.setCustomerPersonNr(text);
+        // System.out.println("Ange personnummret: ");
+        // String text = Utilities.getString();
+        // controller.setCustomerPersonNr(text);
 
-        System.out.println("Ange förnamn: ");
-        text = Utilities.getString();
-        controller.setCustomerFirstName(text);
+        // System.out.println("Ange förnamn: ");
+        // text = Utilities.getString();
+        // controller.setCustomerFirstName(text);
 
     }
 

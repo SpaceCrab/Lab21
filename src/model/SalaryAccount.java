@@ -4,8 +4,8 @@ public class SalaryAccount extends Account{
 
     private String employer;
 
-    public SalaryAccount(String accountId, double accountBalance, String accountType, String accountName, String employer) {
-        super(accountId, accountBalance, accountType, accountName);
+    public SalaryAccount(String accountId, double accountBalance, String accountName, AccountType accountType, String employer) {
+        super(accountId, accountBalance, accountName, accountType);
         this.employer = employer;
     }
 
@@ -15,31 +15,6 @@ public class SalaryAccount extends Account{
 
     public void setEmployer(String employer) {
         this.employer = employer;
-    }
-
-    @Override
-    public void setAccountId() {
-
-    }
-
-    @Override
-    public String getAccountName() {
-        return null;
-    }
-
-    @Override
-    public void setAccountName() {
-
-    }
-
-    @Override
-    public void setAccountType() {
-
-    }
-
-    @Override
-    public double setBalance() {
-        return 0;
     }
 
     @Override
