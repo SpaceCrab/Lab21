@@ -57,15 +57,19 @@ public class Controller {
                     mainView.displayCustomerInfo(customerManager.getLoginAsCustomer().getInfoStrings());
                     break;
                 case 2:
-                    String[] accountInfo = accountManager.getCustomerAccount(customerManager.getLoginAsCustomer().getCustomerId());
+                    String[] accountInfo = accountManager.getCustomerAccountInfos(customerManager.getLoginAsCustomer().getCustomerId());
                     mainView.displayCustomerInfo(accountInfo);
                     break;
                 case 3:
                     showAccountCreationMenu();
                     break;
                 case 4:
-                    // showAccountDeletionMenu();
+                    showAccountDeletionMenu();
                     break;
+                case 5:
+                    String[] allAccountInfo = accountManager.getAccountListStrings();
+                    mainView.displayAccountInfo(allAccountInfo);
+                    break;    
                 case -1:
                     mainView.showMessage("Välkommen åter!");
                     customerManager.logout();
@@ -111,14 +115,24 @@ public class Controller {
     }
 
     private void showAccountDeletionMenu(){
-        // int choice = 0;
-        // do{
-        //     String[] accountInfo = getAccountInfo(currentCustomer);
-        //     choice = mainView.showAccountDeletionMenu(accountInfo);
-        //     if(choice >= 0 && choice < accountInfo.length){
-        //         currentCustomer.removeAccount(currentCustomer.getAccount(choice));
-        //     }
-        // }while(choice != -1);
+        int choice = 0;
+
+        do {
+            String customerID = customerManager.getLoginAsCustomer().getCustomerId();
+            String[] accountInfo = accountManager.getCustomerAccountInfos(customerID);
+            choice = mainView.showAccountDeletionMenu(accountInfo);
+
+            if(choice != -1){
+                Account[] accounts = accountManager.getCustomerAccounts(customerID);
+                boolean ok = accountManager.removeCustomerAccount(customerID, accounts[choice].getAccountId());
+                
+                if(ok)
+                    mainView.showMessage("Konto borttaget");
+                else
+                    mainView.showMessage("Kunde inte ta bort konto");
+            }
+
+        }while (choice != -1);
     }
 
     public void createSavingsAccount(){

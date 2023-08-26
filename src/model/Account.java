@@ -7,7 +7,7 @@ public abstract class Account implements IAccount {
     private String accountName;
 
 
-    private String accountHolders[] = null;
+    private String accountHolders[] = new String[0];
     private int accountHolderCount = 0;
 
     public Account(String accountId, double accountBalance, String accountName, AccountType accountType) {
@@ -19,7 +19,6 @@ public abstract class Account implements IAccount {
 
     @Override
     public void addAccountHolder(String customerID) {
-        if (accountHolders == null) accountHolders = new String[1];
         if (accountHolderCount == accountHolders.length) {
             String[] temp = new String[accountHolders.length + 1];
             for (int i = 0; i < accountHolders.length; i++) {

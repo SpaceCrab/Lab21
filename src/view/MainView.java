@@ -16,12 +16,13 @@ public class MainView {
         Utilities.padChars('*', 40);
         System.out.println("Välj ett alternativ \n");
         System.out.println("1. Visa kundinformation");
-        System.out.println("2. Visa konton");
+        System.out.println("2. Visa användarens konton");
         System.out.println("3. skapa konto");
         System.out.println("4. Ta bort konto");
+        System.out.println("5. visa alla konton");
         System.out.println("-1. Avsluta");
 
-        choice = Utilities.getInteger(-1,4);
+        choice = Utilities.getInteger(-1,5);
 
         return choice;
     }
@@ -64,6 +65,12 @@ public class MainView {
         Utilities.padChars('*', 40);
         System.out.println("Kundinformation \n");
         Utilities.printArray(customerInfo);
+    }
+
+    public void displayAccountInfo(String[] accountInfo){
+        Utilities.padChars('*', 40);
+        System.out.println("Kontoinformation \n");
+        Utilities.printArray(accountInfo);
     }
 
     public int showAccountDeletionMenu(String[] accountInfo){

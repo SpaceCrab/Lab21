@@ -45,7 +45,7 @@ public class AccountManager {
         return accountCount;
     }
 
-    public String[] getCustomerAccount(String customerID) {
+    public Account[] getCustomerAccounts(String customerID) {
         int[] accountIDs = new int[accountCount];
         int count = 0;
         for (int i = 0; i < accountCount; i++) {
@@ -58,10 +58,43 @@ public class AccountManager {
                 }
             }
         }
-        String[] accountStrings = new String[count];
+        Account[] customerAccounts = new Account[count];
         for  (int i = 0; i < count; i++) {
-            accountStrings[i] = accounts[accountIDs[i]].toString();
+            customerAccounts[i] = accounts[accountIDs[i]];
+        }
+        return customerAccounts;
+    }
+
+    public String[] getCustomerAccountInfos(String customerID) {
+        Account[] customerAccounts = getCustomerAccounts(customerID);
+        String[] accountStrings = new String[customerAccounts.length];
+        for  (int i = 0; i < customerAccounts.length; i++) {
+            accountStrings[i] = customerAccounts[i].toString();
         }
         return accountStrings;
+    }
+
+    public boolean removeCustomerAccount(String customerID, String accountID){
+        int index = -1;
+        for (int i = 0; i < accountCount; i++) {
+            Account account = accounts[i];
+            if (account.getAccountId().equals(accountID)) {
+                String[] accountHolders = account.getAccountHolders();
+                for (int j = 0; j < accountHolders.length; j++) {
+                    if (accountHolders[j].equals(customerID)) {
+                        index = i;
+                        break;
+                    }
+                }
+            }
+        }
+        if (index != -1) {
+            for (int i = index; i < accountCount - 1; i++) {
+                accounts[i] = accounts[i + 1];
+            }
+            accountCount--;
+            return true;
+        }
+        return false;
     }
 }
