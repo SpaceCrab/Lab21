@@ -32,6 +32,10 @@ public class Customer extends Person{
     //list of customer accounts
     private Account[] accounts;
 
+    public Account getAccount(int index){
+        return accounts[index];
+    }
+
     public String[] getAccountStrings(){
         if(accounts == null)
         {
@@ -61,6 +65,27 @@ public class Customer extends Person{
                 temp[i] = accounts[i];
             }
             temp[accounts.length] = account;
+            accounts = temp;
+        }
+    }
+
+    public void removeAccount(Account account){
+        if(accounts == null)
+        {
+            return;
+        }
+        else
+        {
+            Account[] temp = new Account[accounts.length - 1];
+            int j = 0;
+            for(int i = 0; i < accounts.length; i++)
+            {
+                if(!accounts[i].equals(account))
+                {
+                    temp[j] = accounts[i];
+                    j++;
+                }
+            }
             accounts = temp;
         }
     }

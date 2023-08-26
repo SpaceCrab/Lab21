@@ -54,7 +54,7 @@ public class MainView {
         System.out.println("4. Pensionsskonto");
         System.out.println("-1. Avsluta");
 
-        choice = Utilities.getInteger(-1,3);
+        choice = Utilities.getInteger(-1,4);
 
         return choice;
     }
@@ -63,6 +63,15 @@ public class MainView {
         Utilities.padChars('*', 40);
         System.out.println("Kundinformation \n");
         Utilities.printArray(customerInfo);
+    }
+
+    public int showAccountDeletionMenu(String[] accountInfo){
+        Utilities.padChars('*', 40);
+        System.out.println("Kontoinformation \n");
+        Utilities.printNumberedArray(accountInfo);
+        System.out.println("Välj ett konto att ta bort eller -1 för att avsluta \n");
+        int choice = Utilities.getInteger(-1,accountInfo.length-1);
+        return choice;
     }
 
     public String getInformation(String message){

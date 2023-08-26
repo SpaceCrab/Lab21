@@ -78,4 +78,10 @@ public class Utilities
         }
     }
 
+    public static void printNumberedArray(String[] array){
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(i + ": " + array[i]);
+        }
+    }
+
 }

@@ -58,6 +58,7 @@ public class Controller {
                     showAccountCreationMenu();
                     break;
                 case 4:
+                    showAccountDeletionMenu();
                     break;
                 case -1:
                     mainView.showMessage("Välkommen åter!");
@@ -99,6 +100,17 @@ public class Controller {
         }while (choice != -1);
     }
 
+    private void showAccountDeletionMenu(){
+        int choice = 0;
+        do{
+            String[] accountInfo = getAccountInfo(currentCustomer);
+            choice = mainView.showAccountDeletionMenu(accountInfo);
+            if(choice >= 0 && choice < accountInfo.length){
+                currentCustomer.removeAccount(currentCustomer.getAccount(choice));
+            }
+        }while(choice != -1);
+    }
+
     public void createCreditAccount(){
         String accountId = ""+(int)(Math.random() * 100) ;
         String accountName = mainView.getInformation("Ange kontonamn");
@@ -114,7 +126,7 @@ public class Controller {
     public void createSavingsAccount(){
         String accountId = ""+(int)(Math.random() * 100) ;
         String accountName = mainView.getInformation("Ange kontonamn");
-        String accountType = "Credit";
+        String accountType = "Savings";
         double interestRate = 0.05;
         double accountBalance = 0;
         double minimumBalance = 0;
