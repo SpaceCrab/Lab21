@@ -2,6 +2,7 @@ package controller;
 
 import model.CustomerManager;
 import model.Customer;
+import model.Person;
 import view.MainView;
 
 public class Controller {
@@ -9,12 +10,11 @@ public class Controller {
     private MainView mainView;
     private Customer currentCustomer;
 
+
     public Controller() {
         final int MAX_CUSTOMERS = 100;
-        customerManager = new CustomerManager(MAX_CUSTOMERS);
+        customerManager = new CustomerManager();
         mainView = new MainView(this);
-
-        showmenu();
     }
 
     private void showmenu() {
@@ -23,26 +23,33 @@ public class Controller {
         do {
             choice = mainView.showMenu();
 
-            switch (choice)
-            {
+            switch (choice){
                 case 1:
-                    currentCustomer = new Customer();
-                    mainView.readCustomerInfo();
-                    addNewCustomer();
+                    mainView.displayCustomerInfo(currentPerson.getInfoStrings());
                     break;
                 case 2:
-                    mainView.showMessage("Visa kundinfo");
                     break;
-
-
-                case 0:
-                    mainView.showMessage("Välkommen åter!");
+                case 3:
+                    mainView.readCustomerInfo();
                     break;
-
+                case 4:
+                    break;
+                case -1:
+                    break;
                 default:
-                    mainView.showMessage("Felaktigt val, försök igen!");
                     break;
             }
+
+        }while (choice != 0);
+
+    }
+
+    private void showLogin()
+    {
+        int choice = 0;
+
+        do {
+
         }while (choice != 0);
 
     }
