@@ -1,6 +1,7 @@
 package view;
 import controller.Controller;
 
+
 public class CustomerView {
     Controller controller;
     public CustomerView(Controller controller){
@@ -12,11 +13,12 @@ public class CustomerView {
 
         System.out.println("Ange personnummret: ");
         String text = Utilities.getString();
-        controller.setCustomerPersonnr(text);
+        controller.setCustomerPersonNr(text);
 
         System.out.println("Ange förnamn: ");
         text = Utilities.getString();
         controller.setCustomerFirstName(text);
 
     }
+
 }

@@ -20,7 +20,6 @@ public abstract class Account implements IAccount {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
-
     }
 
     public String getAccountType() {
@@ -33,6 +32,23 @@ public abstract class Account implements IAccount {
 
     public double getBalance() {
         return accountBalance;
+    }
+
+    public void setBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+
+    }
+
+    public String toString() {
+        return accountName + " " + accountId + " " + accountType + " " + accountBalance;
     }
 
 }

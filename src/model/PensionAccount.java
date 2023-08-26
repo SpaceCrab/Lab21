@@ -25,4 +25,9 @@ public class PensionAccount extends SavingsAccount{
     public void setPensionWithdrawalAge(int pensionWithdrawalAge) {
         this.pensionWithdrawalAge = pensionWithdrawalAge;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + pensionAge + " " + pensionWithdrawalAge;
+    }
 }

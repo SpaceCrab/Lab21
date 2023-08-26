@@ -40,4 +40,9 @@ public class OrgAccount extends Account{
     public double setBalance() {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + orgId;
+    }
 }

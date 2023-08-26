@@ -71,4 +71,9 @@ public class SavingsAccount extends Account{
     public double setBalance() {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + interestRate + " " + minimumBalance + " " + maximumWithdrawals;
+    }
 }

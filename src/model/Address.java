@@ -25,4 +25,8 @@ public class Address {
     public void setZipCode(String zipCode) {
         this.street = zipCode;
     }
+
+    public String toString() {
+        return street + " " + zipCode + " " + city;
+    }
 }

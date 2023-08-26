@@ -7,9 +7,55 @@ public class Customer extends Person{
         this.customerId = customerId;
         this.address = address;
     }
+
+    public Customer() {
+    }
     private String customerId;
     private Address address;
+
+    private String phoneNumber;
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getAddressString() {
+        return address.toString();
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
     //list of customer accounts
     private Account[] accounts;
+
+    public String[] getAccountStrings(){
+        if(accounts == null)
+        {
+            String[] retString= new String[1];
+            retString[0] = "No accounts";
+            return retString;
+        }
+        String[] accountStrings = new String[accounts.length];
+        for(int i = 0; i < accounts.length; i++)
+        {
+            accountStrings[i] = accounts[i].toString();
+        }
+        return accountStrings;
+    }
+
+    public String[] getInfoStrings()
+    {
+        String[] infoStrings = new String[5];
+        infoStrings[0] = "First name: " + getFirstName();
+        infoStrings[1] = "Last name: " + getLastName();
+        infoStrings[2] = "Personal Nr: " + getPersonalNr();
+        infoStrings[3] = "Customer Id: " + customerId;
+        infoStrings[4] = "Address: " + address.toString();
+        return infoStrings;
+    }
 
 }

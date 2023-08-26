@@ -18,12 +18,24 @@ public class Person {
         this.firstName = firstName;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setPersonalNr(String personalnr) {
         this.personalnr = personalnr;
+    }
+
+    public String getPersonalNr() {
+        return personalnr;
     }
 
     @Override

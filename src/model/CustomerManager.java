@@ -21,4 +21,14 @@ public class CustomerManager {
         }
         return customerList;
     }
+
+    public Customer getCustomer(int index)
+    {
+        return customers[index];
+    }
+
+    public boolean addNew(Customer currentCustomer)
+    {
+        return true;
+    }
 }

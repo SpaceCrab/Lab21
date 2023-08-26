@@ -72,4 +72,10 @@ public class Utilities
         return str;
     }
 
+    public static void printArray(String[] array){
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i]);
+        }
+    }
+
 }

@@ -2,7 +2,6 @@ package controller;
 
 import model.CustomerManager;
 import model.Customer;
-import model.Person;
 import view.MainView;
 
 public class Controller {
@@ -15,33 +14,9 @@ public class Controller {
         final int MAX_CUSTOMERS = 100;
         customerManager = new CustomerManager();
         mainView = new MainView(this);
-    }
+        currentCustomer = null;
 
-    private void showmenu() {
-        int choice = 0;
-
-        do {
-            choice = mainView.showMenu();
-
-            switch (choice){
-                case 1:
-                    mainView.displayCustomerInfo(currentPerson.getInfoStrings());
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    mainView.readCustomerInfo();
-                    break;
-                case 4:
-                    break;
-                case -1:
-                    break;
-                default:
-                    break;
-            }
-
-        }while (choice != 0);
-
+        showLogin();
     }
 
     private void showLogin()
@@ -49,15 +24,88 @@ public class Controller {
         int choice = 0;
 
         do {
+            String[] persons = customerManager.getCustomerList();
+            choice = mainView.showLoginMenu(persons);
 
-        }while (choice != 0);
+            if (choice >= 0 && choice < persons.length)
+            {
+                currentCustomer = customerManager.getCustomer(choice);
+                mainView.showMessage("Välkommen " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
+                showMainMenu();
+            }
+        }while (choice != -1);
 
     }
-    public void setCustomerPersonnr(String personnr){
+
+    /*
+    * Shows the main menu and handles the user input
+     */
+    private void showMainMenu() {
+        int choice = 0;
+
+        do {
+            choice = mainView.showMainMenu();
+
+            switch (choice){
+                case 1:
+                    String[] customerInfo = getCustomerInfo(currentCustomer);
+                    mainView.displayCustomerInfo(customerInfo);
+                    break;
+                case 2:
+                    String[] accountInfo = getAccountInfo(currentCustomer);
+                    mainView.displayCustomerInfo(accountInfo);
+                    break;
+                case 3:
+                    showAccountCreationMenu();
+                    break;
+                case 4:
+                    break;
+                case -1:
+                    mainView.showMessage("Välkommen åter!");
+                    break;
+                default:
+                    break;
+            }
+
+        }while (choice != -1);
+
+    }
+
+
+    private void showAccountCreationMenu(){
+        int choice = 0;
+
+        do {
+            choice = mainView.showAccountCreationMenu();
+
+            switch (choice){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case -1:
+                    break;
+                default:
+                    break;
+            }
+
+        }while (choice != -1);
+    }
+
+    public String[] getCustomerInfo(Customer customer){
+        return customer.getInfoStrings();
+    }
+
+    public String[] getAccountInfo(Customer customer){
+        return customer.getAccountStrings();
+    }
+    public void setCustomerPersonNr(String personNr){
         if(currentCustomer == null)
             currentCustomer = new Customer();
 
-        currentCustomer.setPersonalNr(personnr);
+        currentCustomer.setPersonalNr(personNr);
 
     }
 

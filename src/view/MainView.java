@@ -10,7 +10,7 @@ public class MainView {
         customerView = new CustomerView(controller);
     }
 
-    public int showMenu(){
+    public int showMainMenu(){
         int choice = 0;
 
         Utilities.padChars('*', 40);
@@ -42,14 +42,26 @@ public class MainView {
 
         return choice;
     }
-    public void displayCustomerInfo(String[] infoStrings){
-        for (int i = 0; i < infoStrings.length; i++) {
-           System.out.println(infoStrings[i]);
-        }
+
+    public int showAccountCreationMenu(){
+        int choice = 0;
+
+        Utilities.padChars('*', 40);
+        System.out.println("Välj ett konto att skapa \n");
+        System.out.println("1. Sparkonto");
+        System.out.println("2. Lönekonto");
+        System.out.println("3. Kreditkonto");
+        System.out.println("-1. Avsluta");
+
+        choice = Utilities.getInteger(-1,3);
+
+        return choice;
     }
 
-    public void readCustomerInfo(){
-        customerView.readCustomerInfo();
+    public void displayCustomerInfo(String[] customerInfo){
+        Utilities.padChars('*', 40);
+        System.out.println("Kundinformation \n");
+        Utilities.printArray(customerInfo);
     }
 
     public void showMessage(String message){
