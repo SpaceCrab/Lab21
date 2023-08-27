@@ -17,11 +17,13 @@ public class Controller {
         accountManager = new AccountManager(MAX_ACCOUNTS);
 
         // Create some test data
+        // One customer with one account
         customerManager.addCustomer(new Customer(customerManager.getNextID(), "Emily", "Wong", "555555-5555", new Address("789 Maple St", "Bigtown", "13579")));
         Account account = new SavingsAccount(accountManager.getNextID(), 0.0, "Sparkonto", AccountType.Savings, 0.05, 0.0, 50);
         account.addAccountHolder(customerManager.getCurrentID());
         accountManager.addAccount(account);
 
+        // three customers with no accounts
         customerManager.addCustomer(new Customer(customerManager.getNextID(), "John", "Doe", "111111-1111", new Address("123 Main St", "Anytown", "12345")));
         customerManager.addCustomer(new Customer(customerManager.getNextID(), "Sarah", "Smith", "333333-3333", new Address("789 Elm St", "Another Town", "54321")));
         customerManager.addCustomer(new Customer(customerManager.getNextID(), "David", "Lee", "444444-4444", new Address("456 Pine St", "Smalltown", "98765")));
@@ -30,6 +32,9 @@ public class Controller {
         showLogin();
     }
 
+    /**
+     * Shows the login menu and handles the user input
+     */
     private void showLogin()
     {
         int choice = 0;
@@ -83,6 +88,9 @@ public class Controller {
     }
 
 
+    /**
+     * Shows the account creation menu and handles the user input
+     */
     private void showAccountCreationMenu(){
         int choice = 0;
 
@@ -114,6 +122,9 @@ public class Controller {
         }while (choice != -1);
     }
 
+    /**
+     * Shows the account deletion menu and handles the user input
+     */
     private void showAccountDeletionMenu(){
         int choice = 0;
 
@@ -135,6 +146,9 @@ public class Controller {
         }while (choice != -1);
     }
 
+    /**
+     * Creates a new savings account for the logged in customer
+     */
     public void createSavingsAccount(){
         String accountId = accountManager.getNextID();
         String accountName = mainView.getInformation("Ange kontonamn");
@@ -149,6 +163,9 @@ public class Controller {
         accountManager.addAccount(savingsAccount);
     }
 
+    /**
+     * Creates a new credit account for the logged in customer
+     */
     public void createCreditAccount(){
         String accountId = accountManager.getNextID();
         String accountName = mainView.getInformation("Ange kontonamn");
@@ -162,6 +179,9 @@ public class Controller {
         accountManager.addAccount(creditAccount);
     }
 
+    /**
+     * Creates a new salary account for the logged in customer
+     */
     public void createSalaryAccount(){
         String accountId = accountManager.getNextID();
         String accountName = mainView.getInformation("Ange kontonamn");
@@ -174,8 +194,11 @@ public class Controller {
         accountManager.addAccount(salaryAccount);
     }
 
+    /**
+     * Creates a new pension account for the logged in customer
+     */
     public void createPensionAccount(){
-        String accountId = ""+(int)(Math.random() * 100) ;
+        String accountId = accountManager.getNextID() ;
         String accountName = mainView.getInformation("Ange kontonamn");
         AccountType accountType = AccountType.Pension;
         double accountBalance = 0;
@@ -187,6 +210,9 @@ public class Controller {
         accountManager.addAccount(pensionAccount);
     }
 
+    /**
+     * Creates a new organization account for the logged in customer
+     */
     public void createOrgAccount(){
         String accountId = accountManager.getNextID();
         String accountName = mainView.getInformation("Ange kontonamn");
@@ -197,42 +223,5 @@ public class Controller {
         Account orgAccount = new OrgAccount(accountId, accountBalance, accountName, accountType, orgId);
         orgAccount.addAccountHolder(customerManager.getLoginAsCustomer().getCustomerId());
         accountManager.addAccount(orgAccount);
-    }
-
-    // public String[] getCustomerInfo(Customer customer){
-    //     return customer.getInfoStrings();
-    // }
-
-    // public String[] getAccountInfo(Customer customer){
-    //     return customer.getAccountStrings();
-    // }
-    // public void setCustomerPersonNr(String personNr){
-    //     if(currentCustomer == null)
-    //         currentCustomer = new Customer();
-
-    //     currentCustomer.setPersonalNr(personNr);
-
-    // }
-
-    // public void setCustomerFirstName(String firstName){
-    //     if(currentCustomer == null)
-    //         currentCustomer = new Customer();
-
-    //     currentCustomer.setFirstName(firstName);
-    // }
-
-    // public void setCustomerLastName(String lastName){
-    //     if(currentCustomer == null)
-    //         currentCustomer = new Customer();
-
-    //     currentCustomer.setLastName(lastName);
-    // }
-
-    public void addNewCustomer(){
-        // boolean ok = customerManager.addCustomer(currentCustomer);
-        // if (ok)
-        //     mainView.showMessage("ny kund registrerad!");
-        // else
-        //     mainView.showMessage("kunde inte registrera");
     }
 }

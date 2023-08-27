@@ -36,8 +36,9 @@ public class PensionAccount extends SavingsAccount{
 
     @Override
     public double calculateSavingsAmount(int years) {
-        // Krav 9 - Pensionssparande överskugga SavingsAccount
-        double savingsAmount = getBalance() * Math.pow(1 + interestRate, years) * bonus;
+        //requirement 9 overloading of a method in a subclass 
+        double rate = super.getInterestRate();
+        double savingsAmount = getBalance() * Math.pow(1 + rate, years) * bonus;
         return savingsAmount;
     }
 

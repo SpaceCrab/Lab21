@@ -14,4 +14,9 @@ public class OrgAccount extends Account {
     public void setOrgId(String orgId) {
         this.orgId = orgId;
     }
+
+    @Override
+    public String toString(){
+        return super.toString() + " " + orgId;
+    }
 }

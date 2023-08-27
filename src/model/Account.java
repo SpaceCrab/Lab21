@@ -5,6 +5,7 @@ public abstract class Account implements IAccount {
     private double accountBalance;
     private AccountType accountType;
     private String accountName;
+    private Transaction[] transactions; //not implemented as per the assignment
 
 
     private String accountHolders[] = new String[0];

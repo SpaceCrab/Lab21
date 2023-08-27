@@ -3,13 +3,15 @@ import controller.Controller;
 
 public class MainView {
     private Controller controller;
-    CustomerView customerView;
 
     public MainView (Controller controller){
         this.controller = controller;
-        customerView = new CustomerView(controller);
     }
 
+    /**
+     * Prints the main menu and returns the user's choice
+     * @return int choice - the user's choice
+     */
     public int showMainMenu(){
         int choice = 0;
 
@@ -27,6 +29,11 @@ public class MainView {
         return choice;
     }
 
+    /**
+     * Prints the login menu and returns the user's choice
+     * @param persons - an array of strings containing the names of the persons
+     * @return int choice - the user's choice
+     */
     public int showLoginMenu(String[] persons){
         int choice = 0;
 
@@ -44,6 +51,10 @@ public class MainView {
         return choice;
     }
 
+    /**
+     * Prints the account creation menu and returns the user's choice
+     * @return int choice - the user's choice
+     */
     public int showAccountCreationMenu(){
         int choice = 0;
 
@@ -61,18 +72,31 @@ public class MainView {
         return choice;
     }
 
+    /**
+     *displays a String array containing customer information
+     * @param customerInfo - an array of strings containing the customer information
+     */
     public void displayCustomerInfo(String[] customerInfo){
         Utilities.padChars('*', 40);
         System.out.println("Kundinformation \n");
         Utilities.printArray(customerInfo);
     }
 
+    /**
+     *displays a String array containing account information
+     * @param accountInfo - an array of strings containing the account information
+     */
     public void displayAccountInfo(String[] accountInfo){
         Utilities.padChars('*', 40);
         System.out.println("Kontoinformation \n");
         Utilities.printArray(accountInfo);
     }
 
+    /**
+     * Prints the account deletion menu and returns the user's choice
+     * @param accountInfo - an array of strings containing the account information
+     * @return int choice - the user's choice or -1 to exit
+     */
     public int showAccountDeletionMenu(String[] accountInfo){
         Utilities.padChars('*', 40);
         System.out.println("Kontoinformation \n");
@@ -82,11 +106,20 @@ public class MainView {
         return choice;
     }
 
+    /**
+     * Prints a message and returns the user's input
+     * @param message
+     * @return String input - the user's input
+     */
     public String getInformation(String message){
         showMessage(message);
         return Utilities.getString();
     }
 
+    /**
+     * Prints a message
+     * @param message
+     */
     public void showMessage(String message){
         System.out.println(message);
     }

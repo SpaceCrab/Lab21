@@ -5,7 +5,7 @@ public class SavingsAccount extends Account{
     private double minimumBalance;
     private double maximumWithdrawals;
     private double currentWithdrawals;
-    protected double interestRate;
+    private double interestRate;
 
     public SavingsAccount(
         String accountId,
